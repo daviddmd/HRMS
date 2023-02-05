@@ -1,10 +1,13 @@
-package com.example.employeeservice.Models.Department;
+package com.example.departmentservice.Models.Department;
 
-import com.example.employeeservice.Models.Location.LocationDTO;
+import com.example.departmentservice.Models.Employee.EmployeeDTO;
+import com.example.departmentservice.Models.Location.LocationDTOSimple;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -15,7 +18,8 @@ public class DepartmentDTO {
     private String code;
     private String name;
     private String description;
-    private LocationDTO location;
+    private List<EmployeeDTO> employees;
+    private LocationDTOSimple location;
 
 
 }

@@ -1,5 +1,7 @@
 package com.example.employeeservice.Controllers;
 
+import com.example.employeeservice.Clients.DepartmentServiceClient;
+import com.example.employeeservice.Clients.JobServiceClient;
 import com.example.employeeservice.Entities.Employee;
 import com.example.employeeservice.Models.Employee.*;
 import com.example.employeeservice.Services.EmployeeService;
@@ -20,6 +22,8 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
     private final ModelMapper mapper;
+    private final DepartmentServiceClient departmentServiceClient;
+    private final JobServiceClient jobServiceClient;
 
     @PostMapping()
     EmployeeDTO createEmployee(@RequestBody @Valid EmployeeCreateDTO dto) {

@@ -12,6 +12,6 @@ public class DepartmentIdToDepartmentDTOConverter extends AbstractConverter<Long
 
     @Override
     protected DepartmentDTO convert(Long source) {
-        return departmentServiceClient.getDepartment(source);
+        return departmentServiceClient.getDepartment(source).getBody();
     }
 }

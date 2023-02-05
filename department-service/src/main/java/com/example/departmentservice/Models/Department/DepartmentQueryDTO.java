@@ -1,4 +1,4 @@
-package com.example.employeeservice.Models.Department;
+package com.example.departmentservice.Models.Department;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
