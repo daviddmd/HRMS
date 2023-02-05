@@ -3,7 +3,7 @@ package com.example.employeeservice.Services;
 import com.example.employeeservice.Entities.Employee;
 import com.example.employeeservice.Exceptions.CustomException;
 import com.example.employeeservice.Models.Employee.EmployeeCreateDTO;
-import com.example.employeeservice.Models.Employee.EmployeeSearchDTO;
+import com.example.employeeservice.Models.Employee.EmployeeQueryDTO;
 import com.example.employeeservice.Models.Employee.EmployeeUpdateDTO;
 import com.example.employeeservice.Repositories.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
@@ -69,7 +69,7 @@ public class EmployeeService {
         return employeeRepository.findAll();
     }
 
-    public List<Employee> searchEmployees(EmployeeSearchDTO dto) {
+    public List<Employee> searchEmployees(EmployeeQueryDTO dto) {
         Stream<Employee> employees = getEmployees().stream();
         if (dto.getManagerId() != null) {
             employees = employees.filter(employee -> employee.getManager() != null && employee.getManager().getId().equals(dto.getManagerId()));
@@ -91,6 +91,7 @@ public class EmployeeService {
     }
 
     public void deleteEmployee(Employee employee) {
+        //TODO cascade operations with department_users and employee_contracts; ALT: MQ
         for (Employee e : getEmployees()) {
             if (e.getManager() != null && e.getManager().getId().equals(employee.getId())) {
                 e.setManager(null);

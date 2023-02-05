@@ -2,7 +2,7 @@ package com.example.employeeservice;
 
 import com.example.employeeservice.Models.Employee.EmployeeCreateDTO;
 import com.example.employeeservice.Models.Employee.EmployeeDTO;
-import com.example.employeeservice.Models.Employee.EmployeeSearchDTO;
+import com.example.employeeservice.Models.Employee.EmployeeQueryDTO;
 import com.example.employeeservice.Models.Employee.EmployeeUpdateDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.*;
@@ -179,7 +179,7 @@ class EmployeeServiceApplicationTests {
     @Order(2)
     void listEmployees() throws Exception {
         MvcResult result = mvc.perform(MockMvcRequestBuilders.get("/employees").
-                        content(toJson(mapper, EmployeeSearchDTO.builder().build())).
+                        content(toJson(mapper, EmployeeQueryDTO.builder().build())).
                         contentType(MediaType.APPLICATION_JSON).
                         accept(MediaType.APPLICATION_JSON)).
                 andExpect(status().isOk()).andReturn();
@@ -190,7 +190,7 @@ class EmployeeServiceApplicationTests {
     @Test
     @Order(3)
     void searchEmployees() throws Exception {
-        EmployeeSearchDTO dto = EmployeeSearchDTO.builder().managerId(1L).build();
+        EmployeeQueryDTO dto = EmployeeQueryDTO.builder().managerId(1L).build();
         MvcResult result = mvc.perform(MockMvcRequestBuilders.get("/employees").
                         content(toJson(mapper, dto)).
                         contentType(MediaType.APPLICATION_JSON).
@@ -199,7 +199,7 @@ class EmployeeServiceApplicationTests {
         List<EmployeeDTO> employeeDTOList = listFromJson(mapper, result, EmployeeDTO[].class);
         assertEquals(1, employeeDTOList.size());
         assertEquals("E2", employeeDTOList.get(0).getIdentifier());
-        dto = EmployeeSearchDTO.builder().managerId(2L).build();
+        dto = EmployeeQueryDTO.builder().managerId(2L).build();
         result = mvc.perform(MockMvcRequestBuilders.get("/employees").
                         content(toJson(mapper, dto)).
                         contentType(MediaType.APPLICATION_JSON).
@@ -208,7 +208,7 @@ class EmployeeServiceApplicationTests {
         employeeDTOList = listFromJson(mapper, result, EmployeeDTO[].class);
         assertEquals(1, employeeDTOList.size());
         assertEquals("E3", employeeDTOList.get(0).getIdentifier());
-        dto = EmployeeSearchDTO.builder().managerId(3L).build();
+        dto = EmployeeQueryDTO.builder().managerId(3L).build();
         result = mvc.perform(MockMvcRequestBuilders.get("/employees").
                         content(toJson(mapper, dto)).
                         contentType(MediaType.APPLICATION_JSON).
@@ -216,7 +216,7 @@ class EmployeeServiceApplicationTests {
                 andExpect(status().isOk()).andReturn();
         employeeDTOList = listFromJson(mapper, result, EmployeeDTO[].class);
         assertEquals(0, employeeDTOList.size());
-        dto = EmployeeSearchDTO.builder().email("employee1@example.com").build();
+        dto = EmployeeQueryDTO.builder().email("employee1@example.com").build();
         result = mvc.perform(MockMvcRequestBuilders.get("/employees").
                         content(toJson(mapper, dto)).
                         contentType(MediaType.APPLICATION_JSON).
@@ -225,7 +225,7 @@ class EmployeeServiceApplicationTests {
         employeeDTOList = listFromJson(mapper, result, EmployeeDTO[].class);
         assertEquals(1, employeeDTOList.size());
         assertEquals("E1", employeeDTOList.get(0).getIdentifier());
-        dto = EmployeeSearchDTO.builder().name("Employee").build();
+        dto = EmployeeQueryDTO.builder().name("Employee").build();
         result = mvc.perform(MockMvcRequestBuilders.get("/employees").
                         content(toJson(mapper, dto)).
                         contentType(MediaType.APPLICATION_JSON).
@@ -233,7 +233,7 @@ class EmployeeServiceApplicationTests {
                 andExpect(status().isOk()).andReturn();
         employeeDTOList = listFromJson(mapper, result, EmployeeDTO[].class);
         assertEquals(3, employeeDTOList.size());
-        dto = EmployeeSearchDTO.builder().phoneNumber("910 000 000").build();
+        dto = EmployeeQueryDTO.builder().phoneNumber("910 000 000").build();
         result = mvc.perform(MockMvcRequestBuilders.get("/employees").
                         content(toJson(mapper, dto)).
                         contentType(MediaType.APPLICATION_JSON).
@@ -243,7 +243,7 @@ class EmployeeServiceApplicationTests {
         assertEquals(1, employeeDTOList.size());
         assertEquals("E1", employeeDTOList.get(0).getIdentifier());
 
-        dto = EmployeeSearchDTO.builder().identifier("E1").build();
+        dto = EmployeeQueryDTO.builder().identifier("E1").build();
         result = mvc.perform(MockMvcRequestBuilders.get("/employees").
                         content(toJson(mapper, dto)).
                         contentType(MediaType.APPLICATION_JSON).

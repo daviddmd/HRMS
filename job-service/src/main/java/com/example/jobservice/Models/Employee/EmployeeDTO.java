@@ -1,4 +1,4 @@
-package com.example.employeeservice.Models.Employee;
+package com.example.jobservice.Models.Employee;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,10 +9,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class EmployeeSearchDTO {
-    private Long managerId;
+public class EmployeeDTO {
+    private Long id;
     private String name;
+    private String identifier;
     private String email;
     private String phoneNumber;
-    private String identifier;
 }
