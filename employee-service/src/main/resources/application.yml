@@ -49,3 +49,13 @@ logging:
         web:
           filter:
             CommonsRequestLoggingFilter: DEBUG
+
+springdoc:
+  api-docs:
+    enabled: true
+    path: /rest-api-docs
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui
+    tags-sorter: alpha
+  default-produces-media-type: application/json

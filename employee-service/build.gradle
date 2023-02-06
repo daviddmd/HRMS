@@ -7,7 +7,7 @@ plugins {
 }
 
 group = 'com.example'
-version = '0.0.1-SNAPSHOT'
+version = '1.0.0'
 sourceCompatibility = '17'
 
 repositories {
@@ -17,6 +17,14 @@ repositories {
 
 ext {
     set('springCloudVersion', "2022.0.1")
+}
+
+bootJar {
+    archiveFileName = "${archiveBaseName.get()}.${archiveExtension.get()}"
+}
+
+openApi {
+    apiDocsUrl.set("http://localhost:8081/rest-api-docs")
 }
 
 dependencies {
@@ -38,6 +46,8 @@ dependencies {
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.9.2'
     implementation 'org.springframework.boot:spring-boot-starter-amqp'
     testImplementation 'org.springframework.amqp:spring-rabbit-test'
+    implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.0.2'
+    implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-common', version: '2.0.2'
 
 }
 

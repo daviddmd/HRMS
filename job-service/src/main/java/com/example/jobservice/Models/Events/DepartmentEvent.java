@@ -11,12 +11,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class DepartmentEvent {
+    private DepartmentDTO department;
+    private EventType eventType;
     public enum EventType {
         CREATE,
         UPDATE,
         DELETE
     }
-
-    private DepartmentDTO department;
-    private EventType eventType;
 }

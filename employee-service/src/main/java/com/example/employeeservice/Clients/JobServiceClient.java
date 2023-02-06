@@ -1,9 +1,7 @@
 package com.example.employeeservice.Clients;
 
 import com.example.employeeservice.Models.Contract.ContractDTO;
-import com.example.employeeservice.Models.Contract.ContractQueryDTO;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.cloud.openfeign.SpringQueryMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

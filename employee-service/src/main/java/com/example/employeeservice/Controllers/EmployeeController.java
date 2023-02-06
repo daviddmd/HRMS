@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.example.employeeservice.Configuration.RabbitMQConfig.userExchange;
+import static com.example.employeeservice.Configuration.RabbitMQConfig.employeeExchange;
 
 @Tag(name = "Employees")
 @RestController
@@ -56,7 +56,7 @@ public class EmployeeController {
     void deleteEmployee(@PathVariable Long id) {
         Employee employee = employeeService.getById(id);
         amqpTemplate.convertAndSend(
-                userExchange, "",
+                employeeExchange, "",
                 EmployeeEvent.builder().
                         employee(mapper.map(employee, EmployeeDTOSimple.class)).
                         eventType(EmployeeEvent.EventType.DELETE).

@@ -6,8 +6,16 @@ plugins {
     id "io.freefair.lombok" version "6.6.1"
 }
 
+bootJar {
+    archiveFileName = "${archiveBaseName.get()}.${archiveExtension.get()}"
+}
+
+openApi {
+    apiDocsUrl.set("http://localhost:8083/rest-api-docs")
+}
+
 group = 'com.example'
-version = '0.0.1-SNAPSHOT'
+version = '1.0.0'
 sourceCompatibility = '17'
 
 configurations {

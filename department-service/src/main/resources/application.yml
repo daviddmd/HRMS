@@ -1,5 +1,5 @@
 server:
-  port: 8083
+  port: ${SPRING_SERVER_PORT:8083}
 spring:
   application:
     name: department-service
@@ -49,3 +49,13 @@ logging:
         web:
           filter:
             CommonsRequestLoggingFilter: DEBUG
+
+springdoc:
+  api-docs:
+    enabled: true
+    path: /rest-api-docs
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui
+    tags-sorter: alpha
+  default-produces-media-type: application/json

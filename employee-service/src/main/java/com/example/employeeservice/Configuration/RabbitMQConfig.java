@@ -10,14 +10,14 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitMQConfig {
-    public final static String userExchange = "user_exchange";
+    public final static String employeeExchange = "employee_exchange";
     private final static String departmentQueue = "department_employee_queue_fanout";
     private final static String jobQueue = "job_employee_queue_fanout";
 
 
     @Bean
     FanoutExchange exchange() {
-        return new FanoutExchange(userExchange);
+        return new FanoutExchange(employeeExchange);
     }
 
     @Bean
@@ -31,12 +31,12 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    Binding departmentBinding(Queue departmentQueue, FanoutExchange exchange){
+    Binding departmentBinding(Queue departmentQueue, FanoutExchange exchange) {
         return BindingBuilder.bind(departmentQueue).to(exchange);
     }
 
     @Bean
-    Binding jobBinding(Queue jobQueue, FanoutExchange exchange){
+    Binding jobBinding(Queue jobQueue, FanoutExchange exchange) {
         return BindingBuilder.bind(jobQueue).to(exchange);
     }
 
