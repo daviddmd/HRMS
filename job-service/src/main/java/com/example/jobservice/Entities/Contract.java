@@ -37,8 +37,6 @@ public class Contract {
     @JoinColumn(name = "job_id")
     @JsonBackReference(value = "job-contract")
     private Job job;
-
-    @NotNull
     private Long departmentId;
 
     @NotNull

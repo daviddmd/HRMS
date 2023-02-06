@@ -2,6 +2,7 @@ package com.example.employeeservice.Models.Contract;
 
 
 import com.example.employeeservice.Enums.ContractType;
+import com.example.employeeservice.Models.Department.DepartmentDTO;
 import com.example.employeeservice.Models.Jobs.JobDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,6 +23,7 @@ public class ContractDTO {
     private JobDTO job;
     private BigDecimal salary;
     private ContractType contractType;
+    private DepartmentDTO department;
 
 
 }

@@ -21,7 +21,6 @@ public class ContractCreateDTO {
 
     @NotNull
     private Long jobId;
-    @NotNull
     private Long departmentId;
 
     @NotNull

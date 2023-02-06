@@ -21,4 +21,6 @@ public class ContractUpdateDTO {
 
     @NotNull
     private ContractType contractType;
+
+    private Long departmentId;
 }

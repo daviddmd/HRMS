@@ -42,9 +42,11 @@ public class ContractService {
             throw new CustomException(String.format("No Employee with ID %d", dto.getEmployeeId()), HttpStatus.BAD_REQUEST);
         }
         //Check if the department exists by its ID
-        ResponseEntity<DepartmentDTO> departmentDTO = departmentServiceClient.getDepartment(dto.getDepartmentId());
-        if (departmentDTO.getStatusCode() != HttpStatus.OK) {
-            throw new CustomException(String.format("No Department with ID %d", dto.getDepartmentId()), HttpStatus.BAD_REQUEST);
+        if (dto.getDepartmentId() != null) {
+            ResponseEntity<DepartmentDTO> departmentDTO = departmentServiceClient.getDepartment(dto.getDepartmentId());
+            if (departmentDTO.getStatusCode() != HttpStatus.OK) {
+                throw new CustomException(String.format("No Department with ID %d", dto.getDepartmentId()), HttpStatus.BAD_REQUEST);
+            }
         }
         //Check if a contract for the employee exists that has not been terminated before creating the current one
         if (contractRepository.existsByEmployeeIdAndEndingDateNotNull(dto.getEmployeeId())) {
@@ -66,6 +68,13 @@ public class ContractService {
         if (dto.getEndingDate() != null && dto.getEndingDate().isBefore(contract.getStartingDate())) {
             throw new CustomException("The contract's ending date cannot be before the contract's beginning date", HttpStatus.BAD_REQUEST);
         }
+        if (dto.getDepartmentId() != null) {
+            ResponseEntity<DepartmentDTO> departmentDTO = departmentServiceClient.getDepartment(dto.getDepartmentId());
+            if (departmentDTO.getStatusCode() != HttpStatus.OK) {
+                throw new CustomException(String.format("No Department with ID %d", dto.getDepartmentId()), HttpStatus.BAD_REQUEST);
+            }
+        }
+        contract.setDepartmentId(dto.getDepartmentId());
         contract.setEndingDate(dto.getEndingDate());
         contract.setContractType(dto.getContractType());
         contract.setSalary(dto.getSalary().setScale(2, RoundingMode.HALF_UP));
