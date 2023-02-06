@@ -1,7 +1,6 @@
 package com.example.departmentservice.Models.Department;
 
 import com.example.departmentservice.Models.Employee.EmployeeDTO;
-import com.example.departmentservice.Models.Location.LocationDTOSimple;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 

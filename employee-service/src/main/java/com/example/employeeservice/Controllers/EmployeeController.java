@@ -1,29 +1,29 @@
 package com.example.employeeservice.Controllers;
 
-import com.example.employeeservice.Clients.DepartmentServiceClient;
-import com.example.employeeservice.Clients.JobServiceClient;
 import com.example.employeeservice.Entities.Employee;
 import com.example.employeeservice.Models.Employee.*;
+import com.example.employeeservice.Models.Events.EmployeeEvent;
 import com.example.employeeservice.Services.EmployeeService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static com.example.employeeservice.Configuration.RabbitMQConfig.userExchange;
 
 @Tag(name = "Employees")
 @RestController
 @RequestMapping("/employees")
 @RequiredArgsConstructor
 public class EmployeeController {
-    //private EurekaClient eurekaClient;
     private final EmployeeService employeeService;
-
     private final ModelMapper mapper;
-    private final DepartmentServiceClient departmentServiceClient;
-    private final JobServiceClient jobServiceClient;
+
+    private final AmqpTemplate amqpTemplate;
 
     @PostMapping()
     EmployeeDTO createEmployee(@RequestBody @Valid EmployeeCreateDTO dto) {
@@ -54,6 +54,14 @@ public class EmployeeController {
 
     @DeleteMapping("/{id}")
     void deleteEmployee(@PathVariable Long id) {
+        Employee employee = employeeService.getById(id);
+        amqpTemplate.convertAndSend(
+                userExchange, "",
+                EmployeeEvent.builder().
+                        employeeDTO(mapper.map(employee, EmployeeDTOSimple.class)).
+                        eventType(EmployeeEvent.EventType.DELETE).
+                        build()
+        );
         employeeService.deleteEmployee(employeeService.getById(id));
     }
 

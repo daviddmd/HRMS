@@ -1,5 +1,6 @@
 package com.example.departmentservice.Controllers;
 
+import com.example.departmentservice.Entities.Department;
 import com.example.departmentservice.Models.Department.*;
 import com.example.departmentservice.Services.DepartmentService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -30,7 +31,7 @@ public class DepartmentController {
 
     @GetMapping("/employee/{id}")
     List<DepartmentDTOSimple> getDepartmentsEmployee(@PathVariable Long id) {
-        return departmentService.queryDepartments(DepartmentQueryDTO.builder().employeeId(id).build()).stream().map(department -> mapper.map(department, DepartmentDTOSimple.class)).toList();
+        return departmentService.queryDepartmentsEmployee(id).stream().map(department -> mapper.map(department, DepartmentDTOSimple.class)).toList();
     }
 
     @GetMapping("/{id}")

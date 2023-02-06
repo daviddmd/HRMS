@@ -33,6 +33,10 @@ public class DepartmentService {
         return departmentRepository.findAll();
     }
 
+    public List<Department> queryDepartmentsEmployee(Long employeeId) {
+        return queryDepartments(DepartmentQueryDTO.builder().employeeId(employeeId).build());
+    }
+
     public List<Department> queryDepartments(DepartmentQueryDTO dto) {
         Stream<Department> departmentStream = getAll().stream();
         if (dto.getEmployeeId() != null) {
@@ -89,5 +93,12 @@ public class DepartmentService {
                 throw new CustomException(String.format("Employee with ID %d doesn't exist.", employeeId), HttpStatus.NOT_FOUND);
             }
         }
+    }
+
+    void removeEmployeeFromDepartment(Department department, Long employeeId) {
+        List<Long> departmentEmployees = department.getEmployees();
+        departmentEmployees.remove(employeeId);
+        department.setEmployees(departmentEmployees);
+        departmentRepository.save(department);
     }
 }

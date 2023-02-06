@@ -3,7 +3,9 @@ package com.example.departmentservice.Configuration;
 import com.example.departmentservice.Clients.EmployeeServiceClient;
 import com.example.departmentservice.Entities.Department;
 import com.example.departmentservice.Models.Department.DepartmentDTO;
+import com.example.departmentservice.Models.Department.DepartmentDTOSimple;
 import com.example.departmentservice.Models.Mapper.EmployeeIdToEmployeeDTOConverter;
+import com.example.departmentservice.Models.Mapper.EmployeeListToNumberEmployeesConverter;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
@@ -26,6 +28,15 @@ public class ApplicationConfig {
                     @Override
                     protected void configure() {
                         using(new EmployeeIdToEmployeeDTOConverter(employeeServiceClient)).map(source.getEmployees(), destination.getEmployees());
+                        using(new EmployeeListToNumberEmployeesConverter()).map(source.getEmployees(), destination.getNumberEmployees());
+                    }
+                }
+        );
+        modelMapper.typeMap(Department.class, DepartmentDTOSimple.class).addMappings(
+                new PropertyMap<Department, DepartmentDTOSimple>() {
+                    @Override
+                    protected void configure() {
+                        using(new EmployeeListToNumberEmployeesConverter()).map(source.getEmployees(), destination.getNumberEmployees());
                     }
                 }
         );

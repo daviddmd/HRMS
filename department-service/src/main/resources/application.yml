@@ -19,6 +19,13 @@ spring:
       settings:
         web-allow-others: true
       path: /h2-console
+  rabbitmq:
+    host: ${RABBITMQ_HOST:localhost}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USER:guest}
+    password: ${RABBITMQ_PASSWORD:guest}
+  main:
+    allow-bean-definition-overriding: true
 eureka:
   client:
     service-url:

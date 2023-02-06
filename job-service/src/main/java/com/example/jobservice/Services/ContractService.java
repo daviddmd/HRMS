@@ -76,6 +76,10 @@ public class ContractService {
         return contractRepository.findAll();
     }
 
+    public List<Contract> getContractsEmployee(Long employeeId) {
+        return queryContracts(ContractQueryDTO.builder().employeeId(employeeId).build());
+    }
+
     public List<Contract> queryContracts(ContractQueryDTO dto) {
         Stream<Contract> contractStream = getContracts().stream();
         //Filter by Employee ID
@@ -121,5 +125,9 @@ public class ContractService {
 
     public void deleteContract(Contract contract) {
         contractRepository.delete(contract);
+    }
+
+    public void deleteContractsFromEmployee(Long employeeId) {
+        contractRepository.deleteAll(getContractsEmployee(employeeId));
     }
 }

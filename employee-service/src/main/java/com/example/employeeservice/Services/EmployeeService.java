@@ -91,7 +91,6 @@ public class EmployeeService {
     }
 
     public void deleteEmployee(Employee employee) {
-        //TODO cascade operations with department_users and employee_contracts; ALT: MQ
         for (Employee e : getEmployees()) {
             if (e.getManager() != null && e.getManager().getId().equals(employee.getId())) {
                 e.setManager(null);

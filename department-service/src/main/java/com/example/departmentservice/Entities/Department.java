@@ -35,7 +35,7 @@ public class Department {
     @NotBlank
     private String description;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     private List<Long> employees;
     @NotNull
     @ManyToOne
