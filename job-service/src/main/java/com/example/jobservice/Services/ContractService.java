@@ -39,12 +39,12 @@ public class ContractService {
         //Check if the employee exists by its ID
         ResponseEntity<EmployeeDTO> employeeDTO = employeeServiceClient.getEmployee(dto.getEmployeeId());
         if (employeeDTO.getStatusCode() != HttpStatus.OK) {
-            throw new CustomException(String.format("No employee with ID %d", dto.getEmployeeId()), HttpStatus.BAD_REQUEST);
+            throw new CustomException(String.format("No Employee with ID %d", dto.getEmployeeId()), HttpStatus.BAD_REQUEST);
         }
         //Check if the department exists by its ID
         ResponseEntity<DepartmentDTO> departmentDTO = departmentServiceClient.getDepartment(dto.getDepartmentId());
         if (departmentDTO.getStatusCode() != HttpStatus.OK) {
-            throw new CustomException(String.format("No employee with ID %d", dto.getDepartmentId()), HttpStatus.BAD_REQUEST);
+            throw new CustomException(String.format("No Department with ID %d", dto.getDepartmentId()), HttpStatus.BAD_REQUEST);
         }
         //Check if a contract for the employee exists that has not been terminated before creating the current one
         if (contractRepository.existsByEmployeeIdAndEndingDateNotNull(dto.getEmployeeId())) {

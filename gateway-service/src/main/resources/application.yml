@@ -1,0 +1,18 @@
+server:
+  port: 8080
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+    fetch-registry: true
+    register-with-eureka: true
+    registry-fetch-interval-seconds: 5
+    eureka-service-url-poll-interval-seconds: 5
+    eureka-connection-idle-timeout-seconds: 30
+    eureka-server-connect-timeout-seconds: 5
+    eureka-server-read-timeout-seconds: 10
+    instance-info-replication-interval-seconds: 10
+    initial-instance-info-replication-interval-seconds: 10
+spring:
+  application:
+    name: gateway-service
