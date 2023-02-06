@@ -16,6 +16,6 @@ public class DepartmentDTO {
     private String name;
     private String description;
     private LocationDTO location;
-
+    private int numberEmployees;
 
 }

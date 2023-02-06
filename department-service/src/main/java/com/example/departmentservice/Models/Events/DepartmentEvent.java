@@ -1,6 +1,6 @@
-package com.example.jobservice.Models.Events;
+package com.example.departmentservice.Models.Events;
 
-import com.example.jobservice.Models.Employee.EmployeeDTO;
+import com.example.departmentservice.Models.Department.DepartmentDTOSimple;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,13 +10,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class EmployeeEvent {
+public class DepartmentEvent {
     public enum EventType {
         CREATE,
         UPDATE,
         DELETE
     }
 
-    private EmployeeDTO employee;
+    private DepartmentDTOSimple department;
     private EventType eventType;
 }

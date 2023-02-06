@@ -16,7 +16,7 @@ public class RabbitMQService {
     @RabbitListener(queues = "department_employee_queue_fanout")
     public void consumeMessage(EmployeeEvent event) {
         if (event.getEventType() == EmployeeEvent.EventType.DELETE) {
-            Long employeeId = event.getEmployeeDTO().getId();
+            Long employeeId = event.getEmployee().getId();
             List<Department> employeeDepartmentList = departmentService.queryDepartmentsEmployee(employeeId);
             employeeDepartmentList.forEach(department -> departmentService.removeEmployeeFromDepartment(department, employeeId));
         }

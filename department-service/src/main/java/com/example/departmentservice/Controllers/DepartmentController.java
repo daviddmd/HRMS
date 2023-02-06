@@ -2,14 +2,18 @@ package com.example.departmentservice.Controllers;
 
 import com.example.departmentservice.Entities.Department;
 import com.example.departmentservice.Models.Department.*;
+import com.example.departmentservice.Models.Events.DepartmentEvent;
 import com.example.departmentservice.Services.DepartmentService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static com.example.departmentservice.Configuration.RabbitMQConfig.departmentExchange;
 
 @Tag(name = "Departments")
 @RestController
@@ -18,6 +22,8 @@ import java.util.List;
 public class DepartmentController {
     private final DepartmentService departmentService;
     private final ModelMapper mapper;
+
+    private final AmqpTemplate amqpTemplate;
 
     @PostMapping
     DepartmentDTO createDepartment(@RequestBody @Valid DepartmentCreateDTO dto) {
@@ -51,6 +57,14 @@ public class DepartmentController {
 
     @DeleteMapping("/{id}")
     void deleteDepartment(@PathVariable Long id) {
-        departmentService.deleteDepartment(departmentService.getById(id));
+        Department department = departmentService.getById(id);
+        amqpTemplate.convertAndSend(
+                departmentExchange, "",
+                DepartmentEvent.builder().
+                        department(mapper.map(department, DepartmentDTOSimple.class)).
+                        eventType(DepartmentEvent.EventType.DELETE).
+                        build()
+        );
+        departmentService.deleteDepartment(department);
     }
 }

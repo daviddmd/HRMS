@@ -139,4 +139,11 @@ public class ContractService {
     public void deleteContractsFromEmployee(Long employeeId) {
         contractRepository.deleteAll(getContractsEmployee(employeeId));
     }
+
+    public void nullContractDepartments(Long departmentId) {
+        for (Contract contract : queryContracts(ContractQueryDTO.builder().departmentId(departmentId).build())) {
+            contract.setDepartmentId(null);
+            contractRepository.save(contract);
+        }
+    }
 }

@@ -16,7 +16,6 @@ public class DepartmentDTOSimple {
     private String name;
     private String description;
     private LocationDTOSimple location;
-
     private int numberEmployees;
 
 

@@ -58,7 +58,7 @@ public class EmployeeController {
         amqpTemplate.convertAndSend(
                 userExchange, "",
                 EmployeeEvent.builder().
-                        employeeDTO(mapper.map(employee, EmployeeDTOSimple.class)).
+                        employee(mapper.map(employee, EmployeeDTOSimple.class)).
                         eventType(EmployeeEvent.EventType.DELETE).
                         build()
         );

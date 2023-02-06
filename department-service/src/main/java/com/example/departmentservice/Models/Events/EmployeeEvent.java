@@ -16,6 +16,6 @@ public class EmployeeEvent {
         DELETE
     }
 
-    private EmployeeDTO employeeDTO;
+    private EmployeeDTO employee;
     private EventType eventType;
 }
