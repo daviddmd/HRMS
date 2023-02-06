@@ -1,9 +1,6 @@
 package com.example.departmentservice.Controllers;
 
-import com.example.departmentservice.Models.Department.DepartmentCreateDTO;
-import com.example.departmentservice.Models.Department.DepartmentDTO;
-import com.example.departmentservice.Models.Department.DepartmentQueryDTO;
-import com.example.departmentservice.Models.Department.DepartmentUpdateDTO;
+import com.example.departmentservice.Models.Department.*;
 import com.example.departmentservice.Services.DepartmentService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -29,6 +26,11 @@ public class DepartmentController {
     @GetMapping
     List<DepartmentDTO> getDepartments(@RequestBody @Valid DepartmentQueryDTO dto) {
         return departmentService.queryDepartments(dto).stream().map(department -> mapper.map(department, DepartmentDTO.class)).toList();
+    }
+
+    @GetMapping("/employee/{id}")
+    List<DepartmentDTOSimple> getDepartmentsEmployee(@PathVariable Long id) {
+        return departmentService.queryDepartments(DepartmentQueryDTO.builder().employeeId(id).build()).stream().map(department -> mapper.map(department, DepartmentDTOSimple.class)).toList();
     }
 
     @GetMapping("/{id}")

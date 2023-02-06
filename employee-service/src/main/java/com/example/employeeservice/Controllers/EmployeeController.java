@@ -37,7 +37,6 @@ public class EmployeeController {
 
     @GetMapping("/{id}")
     EmployeeDTO getEmployeeById(@PathVariable Long id) {
-        //TODO add current departments and list of contracts
         return mapper.map(employeeService.getById(id), EmployeeDTO.class);
     }
 

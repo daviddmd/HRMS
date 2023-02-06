@@ -2,7 +2,6 @@ package com.example.employeeservice.Models.Mapper;
 
 import com.example.employeeservice.Clients.DepartmentServiceClient;
 import com.example.employeeservice.Models.Department.DepartmentDTO;
-import com.example.employeeservice.Models.Department.DepartmentQueryDTO;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.AbstractConverter;
 
@@ -14,6 +13,6 @@ public class EmployeeIdToDepartmentDTOListConverter extends AbstractConverter<Lo
 
     @Override
     protected List<DepartmentDTO> convert(Long source) {
-        return departmentServiceClient.getDepartments(DepartmentQueryDTO.builder().employeeId(source).build());
+        return departmentServiceClient.getDepartments(source);
     }
 }

@@ -31,6 +31,11 @@ public class ContractController {
         return contractService.queryContracts(dto).stream().map(contract -> mapper.map(contract, ContractDTO.class)).toList();
     }
 
+    @GetMapping("/employee/{id}")
+    List<ContractDTO> getContractsEmployee(@PathVariable Long id) {
+        return contractService.queryContracts(ContractQueryDTO.builder().employeeId(id).build()).stream().map(contract -> mapper.map(contract, ContractDTO.class)).toList();
+    }
+
     @GetMapping("/{id}")
     ContractDTO getContract(@PathVariable Long id) {
         return mapper.map(contractService.getById(id), ContractDTO.class);

@@ -14,7 +14,4 @@ import java.util.List;
 public interface DepartmentServiceClient {
     @RequestMapping(method = RequestMethod.GET, value = "/departments/{id}")
     ResponseEntity<DepartmentDTO> getDepartment(@PathVariable Long id);
-
-    @RequestMapping(method = RequestMethod.GET, value = "/departments", consumes = "application/json")
-    ResponseEntity<List<DepartmentDTO>> getDepartments(DepartmentQueryDTO dto);
 }

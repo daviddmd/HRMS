@@ -2,7 +2,6 @@ package com.example.employeeservice.Models.Mapper;
 
 import com.example.employeeservice.Clients.JobServiceClient;
 import com.example.employeeservice.Models.Contract.ContractDTO;
-import com.example.employeeservice.Models.Contract.ContractQueryDTO;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.AbstractConverter;
 
@@ -14,6 +13,6 @@ public class EmployeeIdToContractDTOListConverter extends AbstractConverter<Long
 
     @Override
     protected List<ContractDTO> convert(Long source) {
-        return jobServiceClient.getContracts(ContractQueryDTO.builder().employeeId(source).build());
+        return jobServiceClient.getContracts(source);
     }
 }

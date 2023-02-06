@@ -1,31 +1,21 @@
 package com.example.jobservice.Models.Contract;
 
-import com.example.jobservice.Enums.ContractType;
 import com.example.jobservice.Models.Department.DepartmentDTO;
 import com.example.jobservice.Models.Employee.EmployeeDTO;
-import com.example.jobservice.Models.Job.JobDTO;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-
+@EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class ContractDTO {
-    private Long id;
+@SuperBuilder
+public class ContractDTO extends ContractDTOSimple {
     private EmployeeDTO employee;
-    private LocalDate startingDate;
-    private LocalDate endingDate;
-    private JobDTO job;
-
     private DepartmentDTO department;
-    private BigDecimal salary;
-    private ContractType contractType;
 
 
 }

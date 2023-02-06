@@ -16,7 +16,4 @@ public interface EmployeeServiceClient {
     @RequestMapping(method = RequestMethod.GET, value = "/employees/{id}")
     ResponseEntity<EmployeeDTO> getEmployee(@PathVariable Long id);
 
-    @RequestMapping(method = RequestMethod.GET, value = "/employees", consumes = "application/json")
-    ResponseEntity<List<EmployeeDTO>> getEmployees(EmployeeQueryDTO dto);
-
 }

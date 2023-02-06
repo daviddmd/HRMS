@@ -8,21 +8,14 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 import org.modelmapper.convention.MatchingStrategies;
-import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.filter.CommonsRequestLoggingFilter;
 
 @Configuration
 @RequiredArgsConstructor
 public class ApplicationConfig {
     private final EmployeeServiceClient employeeServiceClient;
-
-    @Bean
-    @LoadBalanced
-    public RestTemplate restTemplate() {
-        return new RestTemplate();
-    }
 
     @Bean
     public ModelMapper modelMapper() {
@@ -38,4 +31,16 @@ public class ApplicationConfig {
         );
         return modelMapper;
     }
+
+    @Bean
+    public CommonsRequestLoggingFilter requestLoggingFilter() {
+        CommonsRequestLoggingFilter loggingFilter = new CommonsRequestLoggingFilter();
+        loggingFilter.setIncludeClientInfo(true);
+        loggingFilter.setIncludeQueryString(true);
+        loggingFilter.setIncludePayload(true);
+        loggingFilter.setIncludeHeaders(true);
+        loggingFilter.setMaxPayloadLength(64000);
+        return loggingFilter;
+    }
+
 }
