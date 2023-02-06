@@ -11,7 +11,7 @@ import java.util.List;
 
 @FeignClient(value = "employee-service", dismiss404 = true)
 public interface EmployeeServiceClient {
-    @RequestMapping(method = RequestMethod.GET, value = "/employees/{id}")
+    @RequestMapping(method = RequestMethod.GET, value = "/employees/{id}/simple")
     ResponseEntity<EmployeeDTO> getEmployee(@PathVariable Long id);
 
 }

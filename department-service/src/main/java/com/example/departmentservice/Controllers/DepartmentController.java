@@ -38,6 +38,11 @@ public class DepartmentController {
         return mapper.map(departmentService.getById(id), DepartmentDTO.class);
     }
 
+    @GetMapping("/{id}/simple")
+    DepartmentDTOSimple getDepartmentSimple(@PathVariable Long id) {
+        return mapper.map(departmentService.getById(id), DepartmentDTOSimple.class);
+    }
+
     @PutMapping("/{id}")
     DepartmentDTO updateDepartment(@PathVariable Long id, @RequestBody @Valid DepartmentUpdateDTO dto) {
         return mapper.map(departmentService.updateDepartment(departmentService.getById(id), dto), DepartmentDTO.class);

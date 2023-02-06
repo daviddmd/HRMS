@@ -40,6 +40,12 @@ public class EmployeeController {
         return mapper.map(employeeService.getById(id), EmployeeDTO.class);
     }
 
+
+    @GetMapping("/{id}/simple")
+    EmployeeDTOSimple getEmployeeByIdSimple(@PathVariable Long id) {
+        return mapper.map(employeeService.getById(id), EmployeeDTOSimple.class);
+    }
+
     @PutMapping("/{id}")
     EmployeeDTOSimple updateEmployee(@PathVariable Long id, @RequestBody @Valid EmployeeUpdateDTO dto) {
         Employee employee = employeeService.getById(id);
