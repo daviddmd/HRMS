@@ -14,5 +14,47 @@ eureka:
     instance-info-replication-interval-seconds: 10
     initial-instance-info-replication-interval-seconds: 10
 spring:
-  application:
-    name: gateway-service
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak-provider:
+            issuer-uri: '${KEYCLOAK_URI:http://localhost:8180/realms/hrms}'
+            user-name-attribute: preferred_username
+        registration:
+          keycloak-gateway-client:
+            provider: keycloak-provider
+            client-id: ${CLIENT_ID:hrms-gateway-client}
+            client-secret: ${CLIENT_SECRET:IVc0RffM2x2kwC3YWl8Dhd0iHdo1A3P5}
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}/login/oauth2/code/keycloak"
+            scope: openid
+      resource-server:
+        jwt:
+          jwk-set-uri: '${KEYCLOAK_URI:http://localhost:8180/realms/hrms}/protocol/openid-connect/certs'
+
+  cloud:
+    gateway:
+      default-filters:
+        - TokenRelay
+      routes:
+        - id: employee-service
+          uri:
+            lb://employee-service
+          predicates:
+            - Path=/employees/**
+        - id: department-service
+          uri:
+            lb://department-service
+          predicates:
+            - Path=/departments/**,/locations/**
+        - id: job-service
+          uri:
+            lb://job-service
+          predicates:
+            - Path=/jobs/**,/contracts/**
+logging:
+  level:
+    org:
+      springframework:
+        security: info
