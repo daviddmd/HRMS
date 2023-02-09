@@ -24,6 +24,9 @@ the [Employee Service](employee-service/src/main/java/com/example/employeeservic
 aren't set up before the execution of the program, they will be created in the first instantiation of the producers,
 which may result in errors of services that depend on them on their startup.
 
+Authorization and Authentication is done through a Keycloak server. The configuration may be set at the API
+Gateway [configuration file](gateway-service/src/main/resources/application.yml).
+
 A suitable JAR may be built for each service with `gradle build`, as well as the respective OpenAPI information with
 `gradle generateOpenApiDocs`. The OpenAPI docs endpoint may need to be adjusted at `build.gradle` depending on the
 `application.yml` configuration (regarding the application server port).

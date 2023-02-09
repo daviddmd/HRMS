@@ -48,7 +48,8 @@ dependencies {
     testImplementation 'org.springframework.amqp:spring-rabbit-test'
     implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.0.2'
     implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-common', version: '2.0.2'
-
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
 }
 
 dependencyManagement {

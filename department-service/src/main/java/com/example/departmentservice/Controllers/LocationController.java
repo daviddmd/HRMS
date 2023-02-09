@@ -8,6 +8,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,7 +25,8 @@ public class LocationController {
     private final ModelMapper mapper;
 
     @PostMapping
-    LocationDTO createLocation(@RequestBody @Valid LocationCreateDTO dto) {
+    LocationDTO createLocation(@RequestBody @Valid LocationCreateDTO dto, @AuthenticationPrincipal Jwt principal) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return mapper.map(locationService.createLocation(dto), LocationDTO.class);
     }
 

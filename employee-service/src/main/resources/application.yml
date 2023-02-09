@@ -26,6 +26,11 @@ spring:
     password: ${RABBITMQ_PASSWORD:guest}
   main:
     allow-bean-definition-overriding: true
+  security:
+    oauth2:
+      resource-server:
+        jwt:
+          jwk-set-uri: '${KEYCLOAK_URI:http://localhost:8180/realms/hrms}/protocol/openid-connect/certs'
 eureka:
   client:
     service-url:
