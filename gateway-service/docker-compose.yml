@@ -1,0 +1,77 @@
+version: '3.5'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '${SERVER_PORT:-8080}:${SERVER_PORT:-8080}'
+    environment:
+      EUREKA_URI: '${EUREKA_URI}'
+      KEYCLOAK_URI: '${KEYCLOAK_URI}'
+      CLIENT_ID: '${OAUTH_CLIENT_ID}'
+      CLIENT_SECRET: '${OAUTH_CLIENT_SECRET}'
+    networks:
+      - net
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    depends_on:
+      db:
+        condition: service_healthy
+      keycloak:
+        condition: service_healthy
+  db:
+    image: 'mysql:8.0.31'
+    ports:
+      - '${DB_PORT:-3306}:${DB_PORT:-3306}'
+    environment:
+      MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_DATABASE: '${DB_DATABASE}'
+      MYSQL_USER: '${DB_USERNAME}'
+      MYSQL_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+      TZ: '${TIMEZONE}'
+    volumes:
+      - 'db:/var/lib/mysql'
+    networks:
+      - net
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}" ]
+      retries: 10
+      timeout: 30s
+  keycloak:
+    image: 'quay.io/keycloak/keycloak:latest'
+    ports:
+      - '${KEYCLOAK_PORT:-8180}:${KEYCLOAK_PORT:-8180}'
+    environment:
+      KC_HOSTNAME: host.docker.internal
+      KC_HOSTNAME_PORT: '${KEYCLOAK_PORT:-8180}'
+      KEYCLOAK_ADMIN: '${KEYCLOAK_ADMIN:-admin}'
+      KEYCLOAK_ADMIN_PASSWORD: '${KEYCLOAK_ADMIN_PASSWORD:-password}'
+      KC_DB: mysql
+      KC_DB_USERNAME: '${DB_USERNAME}'
+      KC_DB_PASSWORD: '${DB_PASSWORD}'
+      KC_DB_URL_HOST: db
+      KC_DB_URL_PORT: '${DB_PORT:-3306}'
+      KC_DB_SCHEMA: keycloak
+    command: ["start-dev","--http-port=${KEYCLOAK_PORT}"]
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://host.docker.internal:${KEYCLOAK_PORT}/realms/master" ]
+      interval: 15s
+      timeout: 2s
+      retries: 15
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - net
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+
+networks:
+  net:
+    driver: bridge
+volumes:
+  db:
+    driver: local
