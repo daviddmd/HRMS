@@ -6,6 +6,7 @@ import com.example.jobservice.Models.Contract.ContractQueryDTO;
 import com.example.jobservice.Models.Contract.ContractUpdateDTO;
 import com.example.jobservice.Services.ContractService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -17,6 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/contracts")
 @RequiredArgsConstructor
+@RolesAllowed({"administration", "human-resources", "financial"})
 public class ContractController {
     private final ContractService contractService;
     private final ModelMapper mapper;
