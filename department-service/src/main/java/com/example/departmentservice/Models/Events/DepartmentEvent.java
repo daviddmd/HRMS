@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 public class DepartmentEvent {
     private DepartmentDTOSimple department;
     private EventType eventType;
+
     public enum EventType {
         CREATE,
         UPDATE,

@@ -14,6 +14,8 @@ eureka:
     instance-info-replication-interval-seconds: 10
     initial-instance-info-replication-interval-seconds: 10
 spring:
+  application:
+    name: gateway-service
   security:
     oauth2:
       client:
@@ -43,18 +45,47 @@ spring:
             lb://employee-service
           predicates:
             - Path=/employees/**
+          filters:
+            - RewritePath=/employees/v3/api-docs, /v3/api-docs
         - id: department-service
           uri:
             lb://department-service
           predicates:
             - Path=/departments/**,/locations/**
+          filters:
+            - RewritePath=/departments/v3/api-docs, /v3/api-docs
         - id: job-service
           uri:
             lb://job-service
           predicates:
             - Path=/jobs/**,/contracts/**
+          filters:
+            - RewritePath=/jobs/v3/api-docs, /v3/api-docs
+        - id: openapi
+          uri: http://localhost:${server.port}
+          predicates:
+            - Path=/v3/api-docs/**
+          filters:
+            - RewritePath=/v3/api-docs/(?<path>.*), /$\{path}/v3/api-docs
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
 logging:
   level:
     org:
       springframework:
         security: info
+      springdoc: debug
+springdoc:
+  swagger-ui:
+    urls:
+      - name: Employee Service APIs
+        url: /v3/api-docs/employees
+      - name: Department Service APIs
+        url: /v3/api-docs/departments
+      - name: Job Service APIs
+        url: /v3/api-docs/jobs
+    tags-sorter: alpha
+  default-produces-media-type: "application/json"
+

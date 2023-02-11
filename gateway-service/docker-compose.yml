@@ -55,7 +55,7 @@ services:
       KC_DB_URL_HOST: db
       KC_DB_URL_PORT: '${DB_PORT:-3306}'
       KC_DB_SCHEMA: keycloak
-    command: ["start-dev","--http-port=${KEYCLOAK_PORT}"]
+    command: [ "start-dev","--http-port=${KEYCLOAK_PORT}" ]
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://host.docker.internal:${KEYCLOAK_PORT}/realms/master" ]
       interval: 15s

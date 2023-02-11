@@ -1,6 +1,8 @@
 package com.example.gatewayservice.Configuration;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
@@ -10,33 +12,17 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 @EnableWebFluxSecurity
 @EnableReactiveMethodSecurity
 public class SpringCloudConfig {
-    /*
-    @Autowired
-    private TokenRelayGatewayFilterFactory filterFactory;
-
-    @Bean
-    public RouteLocator gatewayRoutes(RouteLocatorBuilder builder) {
-        return builder.routes()
-                .route(r -> r.path("/employees/**")
-                        .filters(f -> f.filter(filterFactory.apply()))
-                        .uri("lb://employee-service")
-                )
-
-                .route(r -> r.path("/departments/**", "/locations/**")
-                        .filters(f -> f.filter(filterFactory.apply()))
-                        .uri("lb://department-service")
-                )
-                .route(r -> r.path("/jobs/**", "/contracts/**")
-                        .filters(f -> f.filter(filterFactory.apply()))
-                        .uri("lb://job-service")
-                )
-                .build();
-    }
-     */
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
         http
                 .authorizeExchange()
+                .pathMatchers(HttpMethod.GET, "/webjars/**").permitAll()
+                .pathMatchers(HttpMethod.GET, "/swagger-ui.html").permitAll()
+                .pathMatchers(HttpMethod.GET, "/swagger-resources/**").permitAll()
+                .pathMatchers(HttpMethod.GET, "/v3/api-docs/**").permitAll()
+                .pathMatchers(HttpMethod.GET, "/employees/v3/api-docs/**").permitAll()
+                .pathMatchers(HttpMethod.GET, "/departments/v3/api-docs/**").permitAll()
+                .pathMatchers(HttpMethod.GET, "/jobs/v3/api-docs/**").permitAll()
                 .anyExchange().
                 authenticated()
                 .and()
@@ -47,5 +33,4 @@ public class SpringCloudConfig {
                 .jwt();
         return http.build();
     }
-
 }

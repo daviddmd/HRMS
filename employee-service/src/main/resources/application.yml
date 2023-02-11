@@ -47,20 +47,13 @@ eureka:
   instance:
     prefer-ip-address: true
 
-logging:
-  level:
-    org:
-      springframework:
-        web:
-          filter:
-            CommonsRequestLoggingFilter: DEBUG
-
 springdoc:
   api-docs:
     enabled: true
-    path: /rest-api-docs
-  swagger-ui:
-    enabled: true
-    path: /swagger-ui
-    tags-sorter: alpha
+    path: /v3/api-docs
   default-produces-media-type: application/json
+  default-consumes-media-type: application/json
+
+openapi:
+  oauth:
+    token-endpoint: '${KEYCLOAK_URI:http://localhost:8180/realms/hrms}/protocol/openid-connect/token'

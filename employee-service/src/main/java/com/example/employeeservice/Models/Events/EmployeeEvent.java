@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 public class EmployeeEvent {
     private EmployeeDTOSimple employee;
     private EventType eventType;
+
     public enum EventType {
         CREATE,
         UPDATE,

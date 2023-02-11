@@ -29,10 +29,6 @@ ext {
     set('springCloudVersion', "2022.0.1")
 }
 
-openApi {
-    apiDocsUrl.set("http://localhost:8082/rest-api-docs")
-}
-
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-web'

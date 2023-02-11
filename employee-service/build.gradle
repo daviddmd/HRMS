@@ -23,10 +23,6 @@ bootJar {
     archiveFileName = "${archiveBaseName.get()}.${archiveExtension.get()}"
 }
 
-openApi {
-    apiDocsUrl.set("http://localhost:8081/rest-api-docs")
-}
-
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-web'
