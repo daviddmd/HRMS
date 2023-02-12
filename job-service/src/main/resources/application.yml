@@ -53,6 +53,12 @@ springdoc:
     path: /v3/api-docs
   default-produces-media-type: application/json
   default-consumes-media-type: application/json
+management:
+  endpoints:
+    web:
+      base-path: /actuator
+      exposure:
+        include: '*'
 
 openapi:
   oauth:

@@ -53,7 +53,12 @@ springdoc:
     path: /v3/api-docs
   default-produces-media-type: application/json
   default-consumes-media-type: application/json
-
+management:
+  endpoints:
+    web:
+      base-path: /actuator
+      exposure:
+        include: '*'
 openapi:
   oauth:
     token-endpoint: '${KEYCLOAK_URI:http://localhost:8180/realms/hrms}/protocol/openid-connect/token'

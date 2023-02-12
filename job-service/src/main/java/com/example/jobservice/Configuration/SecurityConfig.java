@@ -26,11 +26,15 @@ public class SecurityConfig {
     @Value("${springdoc.api-docs.path}")
     private String restApiDocPath;
 
+    @Value("${management.endpoints.web.base-path}")
+    private String actuatorPath;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests().
                 requestMatchers(
-                        format("%s/**", restApiDocPath)
+                        format("%s/**", restApiDocPath),
+                        format("%s/**", actuatorPath)
                 ).permitAll().
                 anyRequest().authenticated().and()
                 .oauth2ResourceServer()

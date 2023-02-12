@@ -47,6 +47,8 @@ spring:
             - Path=/employees/**
           filters:
             - RewritePath=/employees/v3/api-docs, /v3/api-docs
+            - RewritePath=/employees/actuator, /actuator
+            - RewritePath=/employees/actuator/(?<segment>.*), /actuator/$\{segment}
         - id: department-service
           uri:
             lb://department-service
@@ -54,6 +56,8 @@ spring:
             - Path=/departments/**,/locations/**
           filters:
             - RewritePath=/departments/v3/api-docs, /v3/api-docs
+            - RewritePath=/departments/actuator, /actuator
+            - RewritePath=/departments/actuator/(?<segment>.*), /actuator/$\{segment}
         - id: job-service
           uri:
             lb://job-service
@@ -61,6 +65,8 @@ spring:
             - Path=/jobs/**,/contracts/**
           filters:
             - RewritePath=/jobs/v3/api-docs, /v3/api-docs
+            - RewritePath=/jobs/actuator, /actuator
+            - RewritePath=/jobs/actuator/(?<segment>.*), /actuator/$\{segment}
         - id: openapi
           uri: http://localhost:${server.port}
           predicates:
@@ -87,5 +93,14 @@ springdoc:
       - name: Job Service APIs
         url: /v3/api-docs/jobs
     tags-sorter: alpha
+    path: /swagger-ui
   default-produces-media-type: "application/json"
-
+management:
+  endpoints:
+    web:
+      base-path: /actuator
+      exposure:
+        include: '*'
+  endpoint:
+    gateway:
+      enabled: true
